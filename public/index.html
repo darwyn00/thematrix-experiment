@@ -46,18 +46,26 @@ body {
 		};
 
 		function draw() {
-			// a black bgcolor with transparency for the trail
+			// a black bgcolor with transparency for the drop trail
+			// effectively fades the entire screen
 			ctx.fillStyle = "rgba(0, 0, 0, 0.04)";
 			ctx.fillRect(0, 0, c.width, c.height);
 
-			ctx.fillStyle = "#0F0"; //green text
 			ctx.font = fontSize + "vw arial";
 
 			//for each drop
 			for (var i = 0; i < drops.length; i++) {
-				//select a random character to print
+				
+				// draw a black square prior to printing the drop (aka primer paint)
+				ctx.fillStyle = "rgb(0, 0, 0)";
+				ctx.fillRect(i * fontSize * c.width / 100, drops[i]
+				* fontSize * c.width / 100, c.width * fontSize / 100, c.width * fontSize / 100);
+
+				// choose a random drop char to print
 				var text = chars[Math.floor(Math.random() * chars.length)];
-				//x = i*fontSize, y = value of drops[i]*fontSize
+				
+				// print the drop char
+				ctx.fillStyle = "#0F0";
 				ctx.fillText(text, i * fontSize * c.width / 100, drops[i]
 						* fontSize * c.width / 100);
 
@@ -80,7 +88,7 @@ body {
 		}
 
 		init();
-		setInterval(draw, 1000/30);	// 30hz draw rate
+		setInterval(draw, 1000/24);	// 24hz "film" refresh rate
 	</script>
 </body>
 </html>
