@@ -23,7 +23,7 @@ body {
 <body>
 	<canvas id="canvas"></canvas>
 
-	<script defer>
+	<script>
 		var c = document.getElementById("canvas"), ctx = c.getContext("2d"), chars, fontSize, drops;
 
 		function init() {
@@ -47,7 +47,7 @@ body {
 
 		function draw() {
 			// a black bgcolor with transparency for the trail
-			ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
+			ctx.fillStyle = "rgba(0, 0, 0, 0.04)";
 			ctx.fillRect(0, 0, c.width, c.height);
 
 			ctx.fillStyle = "#0F0"; //green text
@@ -80,7 +80,7 @@ body {
 		}
 
 		init();
-		setInterval(draw, 16.66 * 3);
+		setInterval(draw, 1000/30);	// 30hz draw rate
 	</script>
 </body>
 </html>
