@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+<head>
+<style>
+/*basic reset*/
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	margin: 0px;
+	padding: 0px;
+	background: black;
+}
+
+#canvas {
+	display: block;
+}
+</style>
+</head>
+
+<body>
+	<canvas id="canvas"></canvas>
+
+	<script defer>
+		var c = document.getElementById("canvas"), ctx = c.getContext("2d"), chars, fontSize, drops;
+
+		function init() {
+			// fill up the viewport with the canvas
+			c.height = window.innerHeight;
+			c.width = window.innerWidth;
+
+			//set of characters to randomly pick from
+			chars = "╙►±╓↕01§Ω".split("");
+
+			// font size in vw (not pt nor px)
+			fontSize = 0.9;
+
+			//an array of drops; the values represent the Y pos on screen
+			drops = [];
+
+			// set the inital height of each drop to bottom of the viewport
+			for (var col = 0; col < 100 / fontSize; col++)
+				drops[col] = c.height;
+		};
+
+		function draw() {
+			// a black bgcolor with transparency for the trail
+			ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
+			ctx.fillRect(0, 0, c.width, c.height);
+
+			ctx.fillStyle = "#0F0"; //green text
+			ctx.font = fontSize + "vw arial";
+
+			//for each drop
+			for (var i = 0; i < drops.length; i++) {
+				//select a random character to print
+				var text = chars[Math.floor(Math.random() * chars.length)];
+				//x = i*fontSize, y = value of drops[i]*fontSize
+				ctx.fillText(text, i * fontSize * c.width / 100, drops[i]
+						* fontSize * c.width / 100);
+
+				//sending the drop back to the top randomly after it has crossed the screen
+				//adding a randomness to the reset to make the drops scattered on the Y axis
+				if (drops[i] * fontSize * c.height / 100 > c.height
+						&& Math.random() > 0.975)
+					drops[i] = 0;
+
+				//incrementing Y coordinate
+				drops[i]++;
+			}
+		}
+
+		// on layout changes, make sure to change the # drop columns
+		if (window.addEventListener) // W3C DOM
+			window.addEventListener("resize", init, false);
+		else if (window.attachEvent) { // IE DOM
+			window.attachEvent("onresize", init);
+		}
+
+		init();
+		setInterval(draw, 16.66 * 3);
+	</script>
+</body>
+</html>
