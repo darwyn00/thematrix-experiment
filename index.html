@@ -1,23 +1,25 @@
 <!doctype html>
 <html>
+
 <head>
-<style>
-/*basic reset*/
-* {
-	margin: 0;
-	padding: 0;
-}
+	<style>
+		/*basic reset*/
+		* {
+			margin: 0;
+			padding: 0;
+		}
 
-body {
-	margin: 0px;
-	padding: 0px;
-	background: black;
-}
+		body {
+			margin: 0px;
+			padding: 0px;
+			background: black;
+			overflow: hidden;
+		}
 
-#canvas {
-	display: block;
-}
-</style>
+		#canvas {
+			display: block;
+		}
+	</style>
 </head>
 
 <body>
@@ -35,7 +37,7 @@ body {
 			chars = "╙►±╓↕01§Ω".split("");
 
 			// font size in vw (not pt nor px)
-			fontSize = 0.9;
+			fontSize = 0.5;
 
 			//an array of drops; the values represent the Y pos on screen
 			drops = [];
@@ -55,24 +57,24 @@ body {
 
 			//for each drop
 			for (var i = 0; i < drops.length; i++) {
-				
+
 				// draw a black square prior to printing the drop (aka primer paint)
 				ctx.fillStyle = "rgb(0, 0, 0)";
 				ctx.fillRect(i * fontSize * c.width / 100, drops[i]
-				* fontSize * c.width / 100, c.width * fontSize / 100, c.width * fontSize / 100);
+					* fontSize * c.width / 100, c.width * fontSize / 100, c.width * fontSize / 100);
 
 				// choose a random drop char to print
 				var text = chars[Math.floor(Math.random() * chars.length)];
-				
+
 				// print the drop char
 				ctx.fillStyle = "#0F0";
 				ctx.fillText(text, i * fontSize * c.width / 100, drops[i]
-						* fontSize * c.width / 100);
+					* fontSize * c.width / 100);
 
 				//sending the drop back to the top randomly after it has crossed the screen
 				//adding a randomness to the reset to make the drops scattered on the Y axis
 				if (drops[i] * fontSize * c.height / 100 > c.height
-						&& Math.random() > 0.975)
+					&& Math.random() > 0.975)
 					drops[i] = 0;
 
 				//incrementing Y coordinate
@@ -88,7 +90,8 @@ body {
 		}
 
 		init();
-		setInterval(draw, 1000/24);	// 24hz "film" refresh rate
+		setInterval(draw, 1000 / 60);
 	</script>
 </body>
+
 </html>

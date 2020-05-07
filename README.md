@@ -1,8 +1,7 @@
-thematrix-experiment
+Matrix Rain
 ====================
 
-Use a HTML5 Canvas to mimic The Matrix screen (green text rain drops on a black background with fading trails).
+Uses a HTML5 Canvas to mimic The Matrix rain effect (green text rain drops on a black background with fading trails).
 
-Demo
+[See the Demo](https://darwyn00.github.io/matrix-rain/)
 ====
-https://cdn.rawgit.com/darwyn00/thematrix-experiment/master/public/index.html
