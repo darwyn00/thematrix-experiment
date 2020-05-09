@@ -28,16 +28,16 @@
 	<script>
 		var c = document.getElementById("canvas"), ctx = c.getContext("2d"), chars, fontSize, drops;
 
-		function init() {
+		function onReset() {
 			// fill up the viewport with the canvas
 			c.height = window.innerHeight;
 			c.width = window.innerWidth;
 
 			//set of characters to randomly pick from
-			chars = "╙►±╓↕01§Ω".split("");
+			chars = "0123456789ABCDEF".split("");
 
 			// font size in vw (not pt nor px)
-			fontSize = 0.5;
+			fontSize = 0.8;
 
 			//an array of drops; the values represent the Y pos on screen
 			drops = [];
@@ -47,13 +47,13 @@
 				drops[col] = c.height;
 		};
 
-		function draw() {
+		function onDrawFrame() {
 			// a black bgcolor with transparency for the drop trail
 			// effectively fades the entire screen
-			ctx.fillStyle = "rgba(0, 0, 0, 0.04)";
+			ctx.fillStyle = "rgba(0, 0, 0, 0.03)";
 			ctx.fillRect(0, 0, c.width, c.height);
 
-			ctx.font = fontSize + "vw arial";
+			ctx.font = fontSize + "vw 'Lucida Console', Monaco, monospace";
 
 			//for each drop
 			for (var i = 0; i < drops.length; i++) {
@@ -80,17 +80,28 @@
 				//incrementing Y coordinate
 				drops[i]++;
 			}
+
+			window.requestAnimationFrame(onDrawFrame); // schedule next frame's draw call
 		}
 
-		// on layout changes, make sure to change the # drop columns
-		if (window.addEventListener) // W3C DOM
-			window.addEventListener("resize", init, false);
-		else if (window.attachEvent) { // IE DOM
-			window.attachEvent("onresize", init);
+		function onDoubleClick() {
+			if (!document.fullscreenElement) {
+				c.requestFullscreen();
+				c.style.cursor = "none";
+
+			} else {
+				document.exitFullscreen();
+				c.style.cursor = "auto";
+			}
 		}
 
-		init();
-		setInterval(draw, 1000 / 60);
+		window.addEventListener('DOMContentLoaded', (event) => {
+			onReset();
+			window.addEventListener("resize", onReset, false);
+			window.requestAnimationFrame(onDrawFrame);
+			window.addEventListener("dblclick", onDoubleClick);
+		});
+
 	</script>
 </body>
 
